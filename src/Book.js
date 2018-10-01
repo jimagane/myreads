@@ -7,6 +7,12 @@ class Book extends React.Component {
     if (this.props.book.imageLinks != null) {
       coverimage = this.props.book.imageLinks.thumbnail;
     }
+
+    let authors = this.props.book.authors;
+    if (this.props.book.authors === undefined) {
+      authors = '';
+    }
+
     return (
       <li>
         <div className="book">
@@ -23,7 +29,7 @@ class Book extends React.Component {
             </div>
           </div>
           <div className="book-title">{this.props.book.title}</div>
-          <div className="book-authors">{`${this.props.book.authors}`}</div>
+          <div className="book-authors">{`${authors}`}</div>
         </div>
       </li>
     )

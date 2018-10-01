@@ -4,6 +4,17 @@ import Book from './Book';
 
 class SearchBooks extends React.Component {
 
+  renderSearch() {
+    let bookSearchResults = this.props.bookSearchResults;
+    if (bookSearchResults.length > 0) {
+      return bookSearchResults.map((book) => (
+        <Book key={book.id} book={book} onUpdateBook={this.props.onUpdateBook} />
+      ))
+    } else {
+      return <div>No Matching Search Results</div>
+    }
+  }
+
   render() {
     return(
       <div className="search-books">
@@ -19,9 +30,7 @@ class SearchBooks extends React.Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {this.props.bookSearchResults.map((book) => (
-              <Book key={book.id} book={book} onUpdateBook={this.props.onUpdateBook} />
-            ))}
+            {this.renderSearch()}
           </ol>
         </div>
       </div>

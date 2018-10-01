@@ -61,7 +61,8 @@ class BooksApp extends React.Component {
         'shelf': 'none'
       }
     ],
-    query: ''
+    query: '',
+    bookSearchResults: []
   }
 
 /*
@@ -103,17 +104,22 @@ class BooksApp extends React.Component {
   }
 
   render() {
-    const { listAllBooks, query } = this.state;
+    const { listAllBooks, query, bookSearchResults} = this.state;
     let currentlyReading = listAllBooks.filter((book) => book.shelf === "currentlyReading");
     let wantToRead = listAllBooks.filter((book) => book.shelf === "wantToRead");
     let read = listAllBooks.filter((book) => book.shelf === "read");
-    let bookSearchResults = [];
 
     if(query) {
-      const match = new RegExp(escapeRegExp(query), 'i');
-      bookSearchResults = listAllBooks.filter((book) => match.test(book.authors) || match.test(book.title) || match.test(book.subtitle) || match.test(book.categories) || match.test(book.description) || match.test(book.canonicalVolumeLink));
-      bookSearchResults.sort(sortBy('title'));
+      BooksAPI.search(query).then(response => this.setState((prevState) =>(
+        {bookSearchResults: response}
+      )));
     }
+
+
+
+
+
+
 
     return (
       <div className="app">
