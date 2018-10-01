@@ -3,11 +3,15 @@ import React from 'react';
 class Book extends React.Component {
 
   render() {
+    let coverimage = '/icons/placeholder.png';
+    if (this.props.book.imageLinks != null) {
+      coverimage = this.props.book.imageLinks.thumbnail;
+    }
     return (
       <li>
         <div className="book">
           <div className="book-top">
-            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${this.props.book.imageLinks.thumbnail})`}}></div>
+            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${coverimage})`}}></div>
             <div className="book-shelf-changer">
               <select value={this.props.book.shelf} onChange={(event) => this.props.onUpdateBook(event.target.value, this.props.book)}>
                 <option value="move" disabled>Move to...</option>
