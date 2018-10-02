@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import sortBy from 'sort-by';
 import Book from './Book';
 
 class SearchBooks extends React.Component {
@@ -7,11 +8,12 @@ class SearchBooks extends React.Component {
   renderSearch() {
     let bookSearchResults = this.props.bookSearchResults;
     if (bookSearchResults.length > 0) {
+      bookSearchResults.sort(sortBy('title'));
       return bookSearchResults.map((book) => (
         <Book key={book.id} book={book} onUpdateBook={this.props.onUpdateBook} />
       ))
     } else {
-      return <div>No Matching Search Results</div>
+      return <div>No Matching Results</div>
     }
   }
 
