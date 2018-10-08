@@ -39,7 +39,6 @@ Google font Roboto dependent on: https://fonts.googleapis.com/css?family=Roboto:
 Udacity BooksAPI dependent on: https://reactnd-books-api.udacity.com
 
 create-react-app dependencies:
-  - escape-string-regexp
   - react
   - react-dom
   - react-router-dom
@@ -49,6 +48,3 @@ create-react-app dependencies:
 ## Acknowledgements
 
 All starter code provided by Udacity for project. Project built using React create-react-app.
-
-Credit to Radosław Miernik for code solution in App.js:
-https://stackoverflow.com/questions/35174489/reactjs-setstate-of-object-key-in-array/35174579
