@@ -8,25 +8,32 @@ class SearchBooks extends React.Component {
 
   state = {
     query: '',
-    books: [],
-    results: []
+    searchBookResults: [],
+    listBooks: []
   }
 
   updateQuery(query) {
     this.setState({query: query});
     BooksAPI.search(query)
     .then(response => {
-      for (const r of response) {
-        this.setState({books: []})
-        BooksAPI.get(r.id).then(result => this.setState({books: [...this.state.books, result]}))
+      this.setState({searchBookResults: response, listBooks: []});
+      if(this.state.searchBookResults !== undefined && this.state.searchBookResults.error == null) {
+        this.state.searchBookResults.map((book) => {
+          BooksAPI.get(book.id).then(response => this.setState({listBooks: [...this.state.listBooks, response]}))
+        })
+        this.state.listBooks.sort(sortBy('title'));
       }
-    });
+    })
   }
 
-  renderSearchResults = () => {
-
-
-
+  renderSearchResults() {
+    if(this.state.searchBookResults === undefined || this.state.searchBookResults.error != null) {
+      return <div>No Matching Results</div>
+    } else {
+      return this.state.listBooks.map((book) => (
+        <Book key={book.id} book={book} onUpdateBook={this.props.onUpdateBook} />
+      ))
+    }
   }
 
   render() {
@@ -44,9 +51,7 @@ class SearchBooks extends React.Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-          {this.state.books.map((book) => (
-            <Book key={book.id} book={book} onUpdateBook={this.props.onUpdateBook} />
-          ))}
+            {this.renderSearchResults()}
           </ol>
         </div>
       </div>
